@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -50,7 +51,7 @@ class LoginFragment : Fragment() {
                         viewModel.tryLoginWithGoogle(account.idToken!!)
 
                         if (firebaseAuth.currentUser != null) {
-                             findNavController().navigate(R.id.action_loginFragment_to_characterFragment)
+                            findNavController().navigate(R.id.action_loginFragment_to_charactersFragment)
                         }
                     }
                 } catch (e: ApiException) {
@@ -177,9 +178,8 @@ class LoginFragment : Fragment() {
                     tryLogin(email, password)
 
                     if (loginResult.value?.user != null) {
-                        findNavController().navigate(R.id.action_loginFragment_to_characterFragment)
-                    }
-                    else {
+                        findNavController().navigate(R.id.action_loginFragment_to_charactersFragment)
+                    } else {
                         toast(handleSignInWithEmailAndPasswordException())
                     }
 

@@ -1,13 +1,11 @@
 package com.slayer.di
 
-import com.slayer.data.ApiService
-import com.slayer.data.repositories.CharactersRepoImpl
-import com.slayer.domain.repositories.GetCharacterUseCase
 import com.slayer.domain.repositories.AuthRepository
 import com.slayer.domain.repositories.CharactersRepository
+import com.slayer.domain.repositories.GetCharacterUseCase
 import com.slayer.domain.usecases.GoogleAuthUseCase
 import com.slayer.domain.usecases.LoginUseCase
-import dagger.Binds
+import com.slayer.domain.usecases.LogoutUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,5 +37,13 @@ object UseCaseModule {
         repository: AuthRepository
     ) : LoginUseCase {
         return LoginUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLogoutUseCase(
+        repository: AuthRepository
+    ) : LogoutUseCase {
+        return LogoutUseCase(repository)
     }
 }

@@ -17,7 +17,7 @@ import com.slayer.rickandmorty.core.goneIf
 import com.slayer.rickandmorty.core.hideKeyboard
 import com.slayer.rickandmorty.core.startShimmerIf
 import com.slayer.rickandmorty.core.visibleIf
-import com.slayer.rickandmorty.databinding.FragmentCharacterBinding
+import com.slayer.rickandmorty.databinding.FragmentCharactersBinding
 import com.slayer.rickandmorty.ui.dialogs.CustomerFilterDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {
-    private var _binding: FragmentCharacterBinding? = null
+    private var _binding: FragmentCharactersBinding? = null
     private val binding get() = _binding!!
 
     private val vm: CharactersViewModel by viewModels()
@@ -46,7 +46,7 @@ class CharactersFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         if (auth.currentUser == null) {
-            findNavController().navigate(R.id.action_characterFragment_to_loginFragment)
+            findNavController().navigate(R.id.action_charactersFragment_to_loginFragment)
         }
     }
 
@@ -54,7 +54,7 @@ class CharactersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCharacterBinding.inflate(inflater, container, false)
+        _binding = FragmentCharactersBinding.inflate(inflater, container, false)
 
         init()
 

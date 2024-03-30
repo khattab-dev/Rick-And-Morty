@@ -41,4 +41,6 @@
     <string name="male">Male</string>
     <string name="reset_all">Reset All</string>
     <string name="locations">Locations</string>
+    <string name="logout">Logout</string>
+    <string name="sign_out">Sign out</string>
 </resources>
