@@ -15,12 +15,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LocationsViewModel @Inject constructor(private val apiService: ApiService) : ViewModel() {
+    private var mPrevSearchValue: String? = null
+    private var mCurrentSearchValue: String? = null
+
     private var pagingSource: LocationsPagingSource? = null
         get() {
             if (field == null || field?.invalid == true) {
                 field = LocationsPagingSource(
                     apiService,
-                    null
+                    mCurrentSearchValue
                 )
             }
             return field
@@ -40,6 +43,12 @@ class LocationsViewModel @Inject constructor(private val apiService: ApiService)
     fun submitQuery(
         searchValue: String?,
     ) {
-        pagingSource?.invalidate()
+        mCurrentSearchValue = if (searchValue.isNullOrEmpty()) null else searchValue
+
+        if (mPrevSearchValue != mCurrentSearchValue) {
+            pagingSource?.invalidate()
+
+            mPrevSearchValue = mCurrentSearchValue
+        }
     }
 }

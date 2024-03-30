@@ -4,10 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.slayer.rickandmorty.adapters.LocationsAdapter
+import com.slayer.rickandmorty.core.goneIf
+import com.slayer.rickandmorty.core.hideKeyboard
+import com.slayer.rickandmorty.core.startShimmerIf
+import com.slayer.rickandmorty.core.visibleIf
 import com.slayer.rickandmorty.databinding.FragmentLocationsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -18,7 +24,7 @@ class LocationsFragment : Fragment() {
     private var _binding: FragmentLocationsBinding? = null
     private val binding get() = _binding!!
 
-    private val vm : LocationsViewModel by viewModels()
+    private val vm: LocationsViewModel by viewModels()
     private val adapter = LocationsAdapter()
 
     override fun onCreateView(
@@ -27,9 +33,13 @@ class LocationsFragment : Fragment() {
     ): View {
         _binding = FragmentLocationsBinding.inflate(inflater, container, false)
 
-        binding.rvLocations.adapter = adapter
+        init()
 
         observeLocationsPagingData()
+        observeAdapterLoadingState()
+
+        hideKeyboardOnSearchClick()
+        resetSearchOnEndIconClick()
 
         // Inflate the layout for this fragment
         return binding.root
@@ -39,6 +49,51 @@ class LocationsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             vm.locationsFlow.collectLatest {
                 adapter.submitData(it)
+            }
+        }
+    }
+
+    private fun init() {
+        binding.rvLocations.adapter = adapter
+    }
+
+    private fun hideKeyboardOnSearchClick() {
+        binding.containerSearch.editText?.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                vm.submitQuery(v.text.toString())
+
+                hideKeyboard()
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
+    }
+
+    private fun resetSearchOnEndIconClick() {
+        binding.containerSearch.apply {
+            setEndIconOnClickListener {
+                if (editText?.text.isNullOrEmpty()) {
+                    hideKeyboard()
+                    editText?.clearFocus()
+                } else {
+                    editText?.text = null
+                    vm.submitQuery(null)
+                }
+            }
+        }
+    }
+
+    private fun observeAdapterLoadingState() {
+        adapter.addLoadStateListener { loadState ->
+            val isRefreshing = loadState.refresh is LoadState.Loading
+
+            binding.apply {
+                shimmerLayout.apply {
+                    this visibleIf isRefreshing
+                    this startShimmerIf isRefreshing
+                }
+
+                layoutGroup goneIf isRefreshing
             }
         }
     }

@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.slayer.rickandmorty.R
 import com.slayer.rickandmorty.adapters.CharactersAdapter
 import com.slayer.rickandmorty.core.goneIf
+import com.slayer.rickandmorty.core.hideKeyboard
 import com.slayer.rickandmorty.core.startShimmerIf
 import com.slayer.rickandmorty.core.visibleIf
 import com.slayer.rickandmorty.databinding.FragmentCharacterBinding
@@ -34,7 +33,6 @@ class CharactersFragment : Fragment() {
     private val TAG = this::class.simpleName
 
     private val adapter = CharactersAdapter()
-    private lateinit var imm: InputMethodManager
 
     private lateinit var auth: FirebaseAuth
 
@@ -87,7 +85,6 @@ class CharactersFragment : Fragment() {
     }
 
     private fun init() {
-        imm = getSystemService(requireContext(), InputMethodManager::class.java)!!
         binding.rvCharacters.adapter = adapter
     }
 
@@ -100,20 +97,16 @@ class CharactersFragment : Fragment() {
     }
 
     private fun resetSearchOnEndIconClick() {
-        binding.apply {
-            containerSearch.apply {
-                setEndIconOnClickListener {
-                    if (editText?.text.isNullOrEmpty()) {
-                        editText?.clearFocus()
-                    }
-                    else {
-                        editText?.text = null
-                        vm.submitQuery(null, vm.getCurrentStatus(), vm.getCurrentGender())
-                    }
+        binding.containerSearch.apply {
+            setEndIconOnClickListener {
+                if (editText?.text.isNullOrEmpty()) {
+                    hideKeyboard()
+                    editText?.clearFocus()
+                } else {
+                    editText?.text = null
+                    vm.submitQuery(null, vm.getCurrentStatus(), vm.getCurrentGender())
                 }
             }
-
-            imm.hideSoftInputFromWindow(root.windowToken, 0)
         }
     }
 
@@ -122,8 +115,7 @@ class CharactersFragment : Fragment() {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 vm.submitQuery(v.text.toString(), vm.getCurrentStatus(), vm.getCurrentGender())
 
-                imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
-
+                hideKeyboard()
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false

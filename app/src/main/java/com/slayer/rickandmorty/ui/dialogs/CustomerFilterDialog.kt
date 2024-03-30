@@ -17,8 +17,6 @@ class CustomerFilterDialog : DialogFragment() {
 
     private val vm: CharactersViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
-    override fun getTheme() = R.style.RoundedCornersDialog
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,11 +42,12 @@ class CustomerFilterDialog : DialogFragment() {
 
         val width = (requireContext().resources.displayMetrics.widthPixels * 0.85).toInt()
 
-        requireDialog().window?.setBackgroundDrawableResource(R.drawable.background_dialog)
-
-        requireDialog().window?.setLayout(
-            width, ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+        requireDialog().window?.apply {
+            setLayout(
+                width, ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            setBackgroundDrawable(null)
+        }
     }
 
     override fun onDestroy() {
