@@ -7,7 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.slayer.data.ApiService
-import com.slayer.data.dto.CharacterResult.Companion.toCharacter
+import com.slayer.data.dto.characters.CharacterResult.Companion.toCharacter
 import com.slayer.data.pagingdatasource.CharacterPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map

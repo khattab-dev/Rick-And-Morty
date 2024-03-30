@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.slayer.data.ApiService
-import com.slayer.data.dto.CharacterResult.Companion.toCharacter
+import com.slayer.data.dto.characters.CharacterResult.Companion.toCharacter
 import com.slayer.data.pagingdatasource.CharacterPagingSource
 import com.slayer.domain.models.Character
 import com.slayer.domain.repositories.CharactersRepository

@@ -7,4 +7,10 @@
         android:title="@string/characters"
         android:icon="@drawable/rick"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/locationsFragment"
+        android:title="@string/locations"
+        android:icon="@drawable/rick"
+        app:showAsAction="ifRoom" />
 </menu>
