@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1045840464449",
+    "project_id": "rick-and-morty-a3358",
+    "storage_bucket": "rick-and-morty-a3358.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045840464449:android:8b177f8ac90301c8d1d4c0",
+        "android_client_info": {
+          "package_name": "com.slayer.rickandmorty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1045840464449-anvdeejbr3c02iujnqfuq9ncj439fpu6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.slayer.rickandmorty",
+            "certificate_hash": "f8e94add55af1eacdf9eb98f201a3813b36fcab5"
+          }
+        },
+        {
+          "client_id": "1045840464449-bmvm00171ma15ssb4at527358jp0l6ht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh5bEJMANFU3c33dXcmEzPordY0KXKImQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1045840464449-bmvm00171ma15ssb4at527358jp0l6ht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
