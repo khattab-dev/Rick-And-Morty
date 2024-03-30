@@ -43,4 +43,5 @@
     <string name="locations">Locations</string>
     <string name="logout">Logout</string>
     <string name="sign_out">Sign out</string>
+    <string name="dark_mode">Dark mode</string>
 </resources>

@@ -17,12 +17,10 @@
     <fragment
         android:id="@+id/locationsFragment"
         android:name="com.slayer.rickandmorty.ui.fragments.locations.LocationsFragment"
-        android:label="fragment_locations"
         tools:layout="@layout/fragment_locations" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.slayer.rickandmorty.ui.fragments.auth.LoginFragment"
-        android:label="LoginFragment" >
+        android:name="com.slayer.rickandmorty.ui.fragments.auth.LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_charactersFragment"
             app:destination="@id/charactersFragment"

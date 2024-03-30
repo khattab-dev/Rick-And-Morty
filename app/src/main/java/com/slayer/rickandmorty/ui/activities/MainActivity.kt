@@ -8,6 +8,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
@@ -18,8 +21,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.slayer.rickandmorty.R
-import com.slayer.rickandmorty.core.printToLog
 import com.slayer.rickandmorty.core.toast
 import com.slayer.rickandmorty.core.visibleIf
 import com.slayer.rickandmorty.databinding.ActivityMainBinding
@@ -46,39 +49,33 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
     private var hide = true
 
-    private fun toggleAppBar() {
-        // Calculate ActionBar height
-        val tv = TypedValue()
-        var actionBarHeight = 0
-
-        if (theme.resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, resources.displayMetrics)
-        }
-
-        val lp = binding.appBarLayout.layoutParams as CoordinatorLayout.LayoutParams
-        lp.height = if (hide) 0 else actionBarHeight
-        binding.appBarLayout.layoutParams = lp
-        binding.appBarLayout.setExpanded(!hide, true)
-    }
-
+    private lateinit var mDarkModeSwitch: SwitchMaterial
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setInitialTheme()
+
         _binding = ActivityMainBinding.inflate(layoutInflater)
+
         enableEdgeToEdge()
 
         setContentView(binding.root)
-        setupNavController()
 
+        mDarkModeSwitch =
+            binding.navView.menu.findItem(R.id.drawer_dark_mode).actionView as SwitchMaterial
+
+        setupNavController()
 
         setupBackPressedCallback()
         setupDrawerListener(mOnBackPressedCallback)
         setupAppBar()
         setupNavViews()
-        binding.bottomNavigationView.setupWithNavController(navController)
+        setupDarkModeSwitch()
 
         binding.navView.setNavigationItemSelectedListener(this)
+
+        observeDestinationChanges()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -87,11 +84,26 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
+    private fun setInitialTheme() {
+        if (vm.isDarkMode()) {
+            AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+        }
+    }
 
+    private fun setupDarkModeSwitch() {
+        mDarkModeSwitch.isChecked = vm.isDarkMode()
+        mDarkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            vm.setDarkModeValue(isChecked)
+
+            val value = if (isChecked) MODE_NIGHT_YES else MODE_NIGHT_NO
+            AppCompatDelegate.setDefaultNightMode(value)
+        }
+    }
+
+    private fun observeDestinationChanges() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            destination.label.printToLog()
             binding.apply {
                 hide = destination.id !in mainDestinations
                 toggleAppBar()
@@ -141,6 +153,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
     private fun setupNavViews() {
         binding.navView.setupWithNavController(navController)
+        binding.bottomNavigationView.setupWithNavController(navController)
     }
 
     private fun setupAppBar() {
@@ -158,10 +171,25 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         navController = navHostFragment.navController
     }
 
+    private fun toggleAppBar() {
+        val tv = TypedValue()
+        var actionBarHeight = 0
+
+        if (theme.resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            actionBarHeight =
+                TypedValue.complexToDimensionPixelSize(tv.data, resources.displayMetrics)
+        }
+
+        val lp = binding.appBarLayout.layoutParams as CoordinatorLayout.LayoutParams
+        lp.height = if (hide) 0 else actionBarHeight
+        binding.appBarLayout.layoutParams = lp
+        binding.appBarLayout.setExpanded(!hide, true)
+    }
+
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
 
         when (p0.itemId) {
-            R.id.nav_signout -> {
+            R.id.drawer_signout -> {
                 if (vm.tryLogout()) {
                     navController.navigate(R.id.action_charactersFragment_to_loginFragment)
                 } else {

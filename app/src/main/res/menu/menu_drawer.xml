@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
     <item
-        android:id="@+id/nav_signout"
+        android:id="@+id/drawer_dark_mode"
+        android:title="@string/dark_mode"
+        android:icon="@drawable/baseline_dark_mode_24"
+        app:actionViewClass="com.google.android.material.switchmaterial.SwitchMaterial"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/drawer_signout"
         android:icon="@drawable/baseline_logout_24"
         android:title="@string/sign_out" />
 </menu>
