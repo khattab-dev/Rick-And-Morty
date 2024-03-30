@@ -103,10 +103,13 @@ class CharactersFragment : Fragment() {
         binding.apply {
             containerSearch.apply {
                 setEndIconOnClickListener {
-                    editText?.text = null
-                    editText?.clearFocus()
-
-                    vm.submitQuery(null, vm.getCurrentStatus(), vm.getCurrentGender())
+                    if (editText?.text.isNullOrEmpty()) {
+                        editText?.clearFocus()
+                    }
+                    else {
+                        editText?.text = null
+                        vm.submitQuery(null, vm.getCurrentStatus(), vm.getCurrentGender())
+                    }
                 }
             }
 

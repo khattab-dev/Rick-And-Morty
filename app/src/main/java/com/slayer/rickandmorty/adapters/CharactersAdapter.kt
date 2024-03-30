@@ -6,7 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.slayer.domain.repositories.models.Character
+import com.slayer.domain.models.Character
 import com.slayer.rickandmorty.R
 import com.slayer.rickandmorty.databinding.ItemRvCharactersBinding
 

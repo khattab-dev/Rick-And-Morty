@@ -1,4 +1,4 @@
-package com.slayer.domain.repositories.repositories
+package com.slayer.domain.repositories
 
 import kotlinx.coroutines.flow.Flow
 

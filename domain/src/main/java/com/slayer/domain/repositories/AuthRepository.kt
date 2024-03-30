@@ -1,6 +1,6 @@
-package com.slayer.domain.repositories.repositories
+package com.slayer.domain.repositories
 
-import com.slayer.domain.repositories.models.NetworkResult
+import com.slayer.domain.models.NetworkResult
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {

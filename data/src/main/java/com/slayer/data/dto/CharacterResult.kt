@@ -1,7 +1,7 @@
 package com.slayer.data.dto
 
 
-import com.slayer.domain.repositories.models.Character
+import com.slayer.domain.models.Character
 import com.squareup.moshi.Json
 
 data class CharacterResult(

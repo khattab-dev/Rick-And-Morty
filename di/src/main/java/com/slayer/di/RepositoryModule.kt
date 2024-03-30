@@ -2,8 +2,8 @@ package com.slayer.di
 
 import com.slayer.data.repositories.AuthRepoImpl
 import com.slayer.data.repositories.CharactersRepoImpl
-import com.slayer.domain.repositories.repositories.AuthRepository
-import com.slayer.domain.repositories.repositories.CharactersRepository
+import com.slayer.domain.repositories.AuthRepository
+import com.slayer.domain.repositories.CharactersRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -7,13 +7,14 @@ import androidx.paging.map
 import com.slayer.data.ApiService
 import com.slayer.data.dto.CharacterResult.Companion.toCharacter
 import com.slayer.data.pagingdatasource.CharacterPagingSource
-import com.slayer.domain.repositories.models.Character
-import com.slayer.domain.repositories.repositories.CharactersRepository
+import com.slayer.domain.models.Character
+import com.slayer.domain.repositories.CharactersRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class CharactersRepoImpl @Inject constructor(private val apiService: ApiService) : CharactersRepository {
+class CharactersRepoImpl @Inject constructor(private val apiService: ApiService) :
+    CharactersRepository {
     override fun getCharacters(): Flow<PagingData<Character>> {
         return Pager(
             config = PagingConfig(

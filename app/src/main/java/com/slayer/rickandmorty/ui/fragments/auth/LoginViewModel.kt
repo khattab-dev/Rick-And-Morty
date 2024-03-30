@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.slayer.domain.repositories.models.NetworkResult
+import com.slayer.domain.models.NetworkResult
 import com.slayer.domain.usecases.GoogleAuthUseCase
 import com.slayer.domain.usecases.LoginUseCase
 import com.slayer.rickandmorty.R

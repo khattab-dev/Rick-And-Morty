@@ -1,6 +1,5 @@
 package com.slayer.domain.repositories
 
-import com.slayer.domain.repositories.repositories.CharactersRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

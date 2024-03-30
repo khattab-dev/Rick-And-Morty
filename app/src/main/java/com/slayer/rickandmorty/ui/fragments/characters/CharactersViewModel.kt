@@ -17,6 +17,11 @@ import javax.inject.Inject
 class CharactersViewModel @Inject constructor(
     private val apiService: ApiService,
 ) : ViewModel() {
+
+    private var prevSearchValue: String? = null
+    private var prevStatus: String? = null
+    private var prevGender: String? = null
+
     private var currentSearchValue: String? = null
     private var currentStatus: String? = null
     private var currentGender: String? = null
@@ -50,11 +55,17 @@ class CharactersViewModel @Inject constructor(
         status: String?,
         gender: String?
     ) {
-        currentSearchValue = searchValue
+        currentSearchValue = if (searchValue.isNullOrEmpty()) null else searchValue
         currentStatus = status
         currentGender = gender
 
-        pagingSource?.invalidate()
+        if (prevGender != currentGender || prevStatus != currentStatus || prevSearchValue != currentSearchValue) {
+            pagingSource?.invalidate()
+
+            prevGender = currentGender
+            prevStatus = currentStatus
+            prevSearchValue = currentSearchValue
+        }
     }
 
     fun getCurrentSearchValue() = currentSearchValue

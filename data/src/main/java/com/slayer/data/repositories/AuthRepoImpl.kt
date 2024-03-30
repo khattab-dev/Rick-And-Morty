@@ -3,8 +3,8 @@ package com.slayer.data.repositories
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.slayer.domain.repositories.models.NetworkResult
-import com.slayer.domain.repositories.repositories.AuthRepository
+import com.slayer.domain.models.NetworkResult
+import com.slayer.domain.repositories.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow

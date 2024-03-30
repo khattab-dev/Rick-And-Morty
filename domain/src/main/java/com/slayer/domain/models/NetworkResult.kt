@@ -1,4 +1,4 @@
-package com.slayer.domain.repositories.models
+package com.slayer.domain.models
 
 import java.lang.Exception
 
