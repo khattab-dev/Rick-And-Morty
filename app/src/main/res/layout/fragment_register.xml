@@ -10,10 +10,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/container_email"
+        style="@style/AuthenticationInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="@string/email"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11"
@@ -29,9 +31,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/container_password"
+        style="@style/AuthenticationInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/container_email"
@@ -48,6 +52,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/container_confirm_password"
+        style="@style/AuthenticationInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -69,9 +74,9 @@
         android:id="@+id/btn_register"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:padding="16dp"
         android:text="@string/create_account"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/container_password"
         app:layout_constraintStart_toStartOf="@+id/container_password"
         app:layout_constraintTop_toBottomOf="@+id/container_confirm_password" />
@@ -124,7 +129,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:padding="16dp"
-        app:strokeColor="?attr/colorPrimary"
         android:text="@string/google"
         app:icon="@drawable/google"
         app:iconPadding="-16dp"
@@ -132,6 +136,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:strokeColor="?attr/colorPrimary"
         app:strokeWidth="2dp" />
 
     <View
