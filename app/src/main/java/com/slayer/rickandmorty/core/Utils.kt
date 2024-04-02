@@ -17,6 +17,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.slayer.rickandmorty.databinding.DialogNoInternetBinding
+import com.slayer.rickandmorty.ui.dialogs.DefaultDialog
 
 fun Any?.printToLog(tag: String = "DEBUG_LOG") {
     Log.d(tag, toString())

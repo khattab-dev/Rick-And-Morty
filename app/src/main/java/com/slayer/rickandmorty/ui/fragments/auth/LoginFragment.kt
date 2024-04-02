@@ -143,7 +143,7 @@ class LoginFragment : Fragment() {
 
     private fun handleForgetPasswordClick() {
         binding.tvForget.setOnClickListener {
-            //findNavController().navigate(R.id.action_loginFragment_to_forgetPasswordFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_forgetPasswordFragment)
         }
     }
 

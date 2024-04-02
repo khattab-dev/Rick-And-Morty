@@ -1,4 +1,4 @@
-package com.slayer.rickandmorty.core
+package com.slayer.rickandmorty.ui.dialogs
 
 import android.app.Dialog
 import android.content.Context
@@ -18,9 +18,10 @@ class DefaultDialog(private val context: Context, private val view: View) : Dial
         super.onStart()
         val width = (context.resources.displayMetrics.widthPixels * 0.85).toInt()
 
-        this.window?.setLayout(
-            width, ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+        this.window?.apply {
+            setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
+            setBackgroundDrawable(null)
+        }
     }
 
 }

@@ -22,6 +22,11 @@
     <string name="incorrect_password">Incorrect password. Please double-check your password and try again.</string>
     <string name="something_went_wrong_auth">An unexpected authentication error occurred. Please try again later or contact support.</string>
     <string name="no_lists_yet">No lists yet</string>
+    <string name="email_is_not_registered">There is no user record corresponding to this identifier. The user may have been deleted.</string>
+    <string name="forget_password_header">Forget Password</string>
+    <string name="reset_email_sent">Reset Email Sent</string>
+    <string name="retrieve_access_to_your_account_enter_your_credentials_to_reset_your_password_and_unlock_personalized_experiences">Retrieve access to your account. Enter your credentials to reset your password and unlock personalized experiences.</string>
+    <string name="an_email_has_been_sent_to_you_for_password_reset_please_check_your_inbox">If registered, you\'ll receive a password reset email. Check your inbox for instructions.</string>
     <string name="save">Save</string>
     <string name="new_task">New task</string>
     <string name="invalid_password_length">Password must be at least 6 characters long.</string>
