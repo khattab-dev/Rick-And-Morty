@@ -8,15 +8,14 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.slayer.rickandmorty.R
 import com.slayer.rickandmorty.databinding.DialogNoInternetBinding
 
 fun Any?.printToLog(tag: String = "DEBUG_LOG") {
@@ -90,15 +89,15 @@ private fun showNoInternetDialog(context: Context) {
 }
 
 fun createSpannableString(start: Int, end: Int, text: String,context: Context): SpannableString {
+    val typedValue = TypedValue()
+    context.theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, typedValue, true)
+    val color = typedValue.data
+
     val spannableString = SpannableString(text)
 
     // Apply a different color to the specific word
     spannableString.setSpan(
-        ForegroundColorSpan(
-            ContextCompat.getColor(
-                context,
-                R.color.md_theme_light_primary
-            )
+        ForegroundColorSpan(color
         ),
         start,
         end,

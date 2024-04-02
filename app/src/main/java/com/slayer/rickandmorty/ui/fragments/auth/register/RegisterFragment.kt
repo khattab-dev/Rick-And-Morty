@@ -1,4 +1,4 @@
-package com.slayer.rickandmorty.ui.fragments.auth
+package com.slayer.rickandmorty.ui.fragments.auth.register
 
 import android.app.Activity
 import android.os.Bundle
@@ -17,23 +17,25 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.slayer.rickandmorty.R
+import com.slayer.rickandmorty.core.arePasswordsEqual
 import com.slayer.rickandmorty.core.createSpannableString
 import com.slayer.rickandmorty.core.isValidEmailAddress
+import com.slayer.rickandmorty.core.isValidPasswordLength
 import com.slayer.rickandmorty.core.printToLog
 import com.slayer.rickandmorty.core.safeCall
 import com.slayer.rickandmorty.core.toast
-import com.slayer.rickandmorty.databinding.FragmentLoginBinding
+import com.slayer.rickandmorty.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class RegisterFragment : Fragment() {
     private val TAG = this.javaClass.simpleName
 
-    private var _binding: FragmentLoginBinding? = null
+    private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: RegisterViewModel by viewModels()
 
     private lateinit var firebaseAuth: FirebaseAuth
 
@@ -50,11 +52,11 @@ class LoginFragment : Fragment() {
                         viewModel.tryLoginWithGoogle(account.idToken!!)
 
                         if (firebaseAuth.currentUser != null) {
-                            findNavController().navigate(R.id.action_loginFragment_to_charactersFragment)
+                            findNavController().navigate(R.id.action_registerFragment_to_charactersFragment)
                         }
                     }
                 } catch (e: ApiException) {
-                    e.stackTraceToString().printToLog()
+                    "Google sign in failed".printToLog(TAG)
                 }
             }
 
@@ -74,16 +76,15 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
-
-        observeLoadingState()
+        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
         setupSignUpTextColor()
 
-        handleLoginBtnClick()
+        handleAlreadyHaveAccountClick()
         handleGoogleBtnClick()
-        handleCreateAccountClick()
-        handleForgetPasswordClick()
+        handleRegisterBtnClick()
+
+        observeLoadingState()
 
         // Inflate the layout for this fragment
         return binding.root
@@ -91,7 +92,6 @@ class LoginFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-
         _binding = null
     }
 
@@ -99,31 +99,11 @@ class LoginFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.isLoading.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
                 binding.apply {
-                    btnLogin.isEnabled = !it
+                    btnRegister.isEnabled = !it
                     btnGoogle.isEnabled = !it
                 }
             }
         }
-    }
-
-    private fun initializeGoogleSignInClient() {
-        googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
-    }
-
-    private fun initializeGso() {
-        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-    }
-
-    private fun setupSignUpTextColor() {
-        binding.tvCreateAccount.text = createSpannableString(
-            start = 20,
-            end = 27,
-            text = getString(R.string.don_t_have_account_sign_up),
-            context = requireContext()
-        )
     }
 
     private fun handleGoogleBtnClick() {
@@ -135,56 +115,82 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun handleCreateAccountClick() {
-        binding.tvCreateAccount.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+    private fun handleAlreadyHaveAccountClick() {
+        binding.tvAlreadyHaveAccount.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 
-    private fun handleForgetPasswordClick() {
-        binding.tvForget.setOnClickListener {
-            //findNavController().navigate(R.id.action_loginFragment_to_forgetPasswordFragment)
-        }
-    }
-
-    private fun handleLoginBtnClick() {
+    private fun handleRegisterBtnClick() {
         binding.apply {
-            btnLogin.setOnClickListener {
+            btnRegister.setOnClickListener {
                 val email = etEmail.text.toString().trim().lowercase()
                 val password = etPassword.text.toString().trim()
+                val confirmPassword = etConfirmPassword.text.toString().trim()
 
-                if (email.isEmpty()) {
-                    containerEmail.error =
-                        getString(R.string.email_address_is_required_please_enter_a_valid_email)
+                if (areValidFields(email, password, confirmPassword)) return@setOnClickListener
+
+                safeCall(requireContext()) {
+                    lifecycleScope.launch {
+                        viewModel.setLoadingValue(true)
+                        viewModel.tryRegister(email, password)
+
+                        if (viewModel.registerResult.value?.user != null) {
+                            findNavController().navigate(R.id.action_registerFragment_to_charactersFragment)
+                        }
+                        else {
+                            toast(viewModel.handleSignUpWithEmailAndPasswordException())
+                        }
+
+                        viewModel.setLoadingValue(false)
+                    }
                 }
-
-                if (!isValidEmailAddress(email)) {
-                    containerEmail.error =
-                        getString(R.string.invalid_email_address_please_enter_a_valid_email)
-                    return@setOnClickListener
-                }
-
-                tryLogin(email, password)
             }
         }
     }
 
-    private fun tryLogin(email: String, password: String) {
-        safeCall(requireContext()) {
-            lifecycleScope.launch {
-                viewModel.apply {
-                    setLoadingValue(true)
-                    tryLogin(email, password)
+    private fun areValidFields(
+        email: String,
+        password: String,
+        confirmPassword: String
+    ): Boolean {
+        binding.apply {
+            if (!isValidEmailAddress(email)) {
+                containerEmail.error =
+                    getString(R.string.invalid_email_address_please_enter_a_valid_email)
+                return true
+            }
 
-                    if (loginResult.value?.user != null) {
-                        findNavController().navigate(R.id.action_loginFragment_to_charactersFragment)
-                    } else {
-                        toast(handleSignInWithEmailAndPasswordException())
-                    }
+            if (!isValidPasswordLength(password)) {
+                containerPassword.error = getString(R.string.invalid_password_length)
+                return true
+            }
 
-                    setLoadingValue(false)
-                }
+            if (!arePasswordsEqual(password, confirmPassword)) {
+                containerConfirmPassword.error = getString(R.string.password_mismatch)
+                return true
             }
         }
+        return false
+    }
+
+    private fun setupSignUpTextColor() {
+        binding.tvAlreadyHaveAccount.text = createSpannableString(
+            20,
+            28,
+            getString(R.string.do_you_have_account_sign_in),
+            requireContext()
+        )
+    }
+
+    private fun initializeGoogleSignInClient() {
+        googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+    }
+
+    private fun initializeGso() {
+        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id))
+            .requestEmail()
+            .build()
     }
 }
