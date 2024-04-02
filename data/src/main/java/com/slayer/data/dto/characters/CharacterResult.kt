@@ -31,13 +31,14 @@ data class CharacterResult(
     val url: String?
 ) {
     companion object {
-        fun CharacterResult.toCharacter(): Character {
+        fun CharacterResult.toCharacter(isFavorite : Boolean): Character {
             return Character(
                 id = id ?: -1,
                 image = image ?: "",
                 name = name ?: "",
                 type = name ?: "",
-                state = status ?: ""
+                state = status ?: "",
+                isFavorite = isFavorite
             )
         }
     }

@@ -1,4 +1,4 @@
-package com.slayer.data.pagingdatasource
+package com.slayer.data.source.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

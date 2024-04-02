@@ -10,9 +10,10 @@ import com.slayer.domain.models.Character
 import com.slayer.rickandmorty.R
 import com.slayer.rickandmorty.databinding.ItemRvCharactersBinding
 
-class CharactersAdapter : PagingDataAdapter<Character, CharactersAdapter.ViewHolder>(
-    CharactersDiffer()
-) {
+class CharactersAdapter(private val onFavoriteClick: (Character) -> Unit) :
+    PagingDataAdapter<Character, CharactersAdapter.ViewHolder>(
+        CharactersDiffer()
+    ) {
     inner class ViewHolder(
         private val binding: ItemRvCharactersBinding
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -23,6 +24,26 @@ class CharactersAdapter : PagingDataAdapter<Character, CharactersAdapter.ViewHol
                     tvDetails.context.getString(R.string.character_details, item.type, item.state)
 
                 Glide.with(ivCharacter).load(item.image).into(ivCharacter)
+
+                if (item.isFavorite) {
+                    btnFavorite.setIconResource(R.drawable.baseline_favorite_24)
+                }
+                else {
+                    btnFavorite.setIconResource(R.drawable.baseline_favorite_border_24)
+                }
+
+                btnFavorite.setOnClickListener {
+                    if (item.isFavorite) {
+                        item.isFavorite = false
+                        btnFavorite.setIconResource(R.drawable.baseline_favorite_border_24)
+                    }
+                    else {
+                        item.isFavorite = true
+                        btnFavorite.setIconResource(R.drawable.baseline_favorite_24)
+                    }
+
+                    onFavoriteClick.invoke(item)
+                }
             }
         }
     }

@@ -50,4 +50,8 @@ dependencies {
 
     implementation(libs.firebase.ui.auth)
     implementation(libs.kotlinx.coroutines.play.services)
+
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.room.compiler)
+    implementation(libs.androidx.room.ktx)
 }

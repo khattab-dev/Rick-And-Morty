@@ -8,14 +8,23 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import com.slayer.data.ApiService
 import com.slayer.data.dto.characters.CharacterResult.Companion.toCharacter
-import com.slayer.data.pagingdatasource.CharacterPagingSource
+import com.slayer.data.source.paging.CharacterPagingSource
+import com.slayer.domain.models.Character
+import com.slayer.domain.usecases.CharacterExistenceInFavoriteUseCase
+import com.slayer.domain.usecases.DeleteCharacterFromFavUseCase
+import com.slayer.domain.usecases.InsertCharacterToFavUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CharactersViewModel @Inject constructor(
     private val apiService: ApiService,
+    private val insertCharacterToFavUseCase: InsertCharacterToFavUseCase,
+    private val deleteCharacterFromFavUseCase: DeleteCharacterFromFavUseCase,
+    private val characterExistenceInFavoriteUseCase: CharacterExistenceInFavoriteUseCase
 ) : ViewModel() {
 
     private var prevSearchValue: String? = null
@@ -46,7 +55,7 @@ class CharactersViewModel @Inject constructor(
         pagingSourceFactory = { pagingSource!! }
     ).flow.cachedIn(viewModelScope).map {
         it.map { charactersResult ->
-            charactersResult.toCharacter()
+            charactersResult.toCharacter(doesCharacterExistInFavorite(charactersResult.id ?: 0))
         }
     }
 
@@ -81,4 +90,14 @@ class CharactersViewModel @Inject constructor(
     fun setCurrentGender(gender: String?) {
         currentGender = gender
     }
+
+    fun insertCharacterToFav(character: Character) = viewModelScope.launch(Dispatchers.IO) {
+        insertCharacterToFavUseCase(character)
+    }
+
+    fun deleteCharacterToFav(character: Character) = viewModelScope.launch(Dispatchers.IO) {
+        deleteCharacterFromFavUseCase(character)
+    }
+
+    private suspend fun doesCharacterExistInFavorite(id: Int) = characterExistenceInFavoriteUseCase(id)
 }

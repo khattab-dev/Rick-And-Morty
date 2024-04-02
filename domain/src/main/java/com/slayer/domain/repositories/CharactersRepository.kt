@@ -1,7 +1,9 @@
 package com.slayer.domain.repositories
 
-import kotlinx.coroutines.flow.Flow
+import com.slayer.domain.models.Character
 
 interface CharactersRepository {
-    fun getCharacters() : Flow<Any>
+    suspend fun doesExistInFavorite(id : Int) : Boolean
+    suspend fun insertCharacter(character: Character)
+    suspend fun deleteCharacter(character: Character)
 }

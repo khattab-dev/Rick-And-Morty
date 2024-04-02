@@ -1,30 +1,25 @@
 package com.slayer.data.repositories
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.map
 import com.slayer.data.ApiService
-import com.slayer.data.dto.characters.CharacterResult.Companion.toCharacter
-import com.slayer.data.pagingdatasource.CharacterPagingSource
+import com.slayer.data.source.local.dao.CharacterFavoriteDao
+import com.slayer.data.source.local.entities.CharacterEntity
 import com.slayer.domain.models.Character
 import com.slayer.domain.repositories.CharactersRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class CharactersRepoImpl @Inject constructor(private val apiService: ApiService) :
-    CharactersRepository {
-    override fun getCharacters(): Flow<PagingData<Character>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = 10
-            ),
-            pagingSourceFactory = { CharacterPagingSource(apiService,null,null,null) }
-        ).flow.map {
-            it.map { charResult ->
-                charResult.toCharacter()
-            }
-        }
+class CharactersRepoImpl @Inject constructor(
+    private val apiService: ApiService,
+    private val characterFavoriteDao: CharacterFavoriteDao
+) : CharactersRepository {
+    override suspend fun doesExistInFavorite(id: Int): Boolean {
+        return characterFavoriteDao.isCharacterExist(id) == 1
+    }
+
+    override suspend fun insertCharacter(character: Character) {
+        characterFavoriteDao.insertCharacter(CharacterEntity(character.id))
+    }
+
+    override suspend fun deleteCharacter(character: Character) {
+        characterFavoriteDao.deleteCharacter(CharacterEntity(character.id))
     }
 }

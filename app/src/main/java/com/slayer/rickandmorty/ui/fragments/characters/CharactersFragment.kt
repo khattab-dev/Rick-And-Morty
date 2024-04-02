@@ -32,7 +32,14 @@ class CharactersFragment : Fragment() {
 
     private val TAG = this::class.simpleName
 
-    private val adapter = CharactersAdapter()
+    private val adapter = CharactersAdapter {
+        if (it.isFavorite) {
+            vm.insertCharacterToFav(it)
+        }
+        else {
+            vm.deleteCharacterToFav(it)
+        }
+    }
 
     private lateinit var auth: FirebaseAuth
 
