@@ -1,6 +1,7 @@
 [versions]
 agp = "8.3.0"
 datastorePreferences = "1.0.0"
+epoxy = "5.1.4"
 firebaseBom = "32.8.0"
 glide = "4.16.0"
 javaxInject = "1"
@@ -37,6 +38,9 @@ room = "2.6.1"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
+epoxy = { module = "com.airbnb.android:epoxy", version.ref = "epoxy" }
+epoxy-paging = { module = "com.airbnb.android:epoxy-paging3", version.ref = "epoxy" }
+epoxy-processor = { module = "com.airbnb.android:epoxy-processor", version.ref = "epoxy" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 javax-inject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }

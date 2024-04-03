@@ -1,10 +1,12 @@
 package com.slayer.di
 
 import com.slayer.data.repositories.AuthRepoImpl
-import com.slayer.data.repositories.CharactersRepoImpl
+import com.slayer.data.repositories.CharactersLocalRepoImpl
+import com.slayer.data.repositories.CharactersNetworkRepoImpl
 import com.slayer.data.repositories.SharedPrefRepoImpl
 import com.slayer.domain.repositories.AuthRepository
-import com.slayer.domain.repositories.CharactersRepository
+import com.slayer.domain.repositories.CharactersLocalRepository
+import com.slayer.domain.repositories.CharactersNetworkRepository
 import com.slayer.domain.repositories.SharedPreferenceRepository
 import dagger.Binds
 import dagger.Module
@@ -18,8 +20,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindCharactersRepo(
-        repoImpl: CharactersRepoImpl
-    ) : CharactersRepository
+        repoImpl: CharactersLocalRepoImpl
+    ) : CharactersLocalRepository
 
     @Binds
     @Singleton
@@ -27,5 +29,9 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindDataStoreRepo(authRepoImpl: SharedPrefRepoImpl): SharedPreferenceRepository
+    abstract fun bindSharedPreferenceRepo(authRepoImpl: SharedPrefRepoImpl): SharedPreferenceRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindCharactersRepoNetwork(repo: CharactersNetworkRepoImpl): CharactersNetworkRepository
 }

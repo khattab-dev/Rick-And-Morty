@@ -1,10 +1,10 @@
 package com.slayer.domain.usecases
 
-import com.slayer.domain.repositories.CharactersRepository
+import com.slayer.domain.repositories.CharactersLocalRepository
 import javax.inject.Inject
 
 class CharacterExistenceInFavoriteUseCase @Inject constructor(
-    private val charactersRepository : CharactersRepository
+    private val charactersLocalRepository : CharactersLocalRepository
 ) {
-   suspend operator fun invoke(id : Int) = charactersRepository.doesExistInFavorite(id)
+   suspend operator fun invoke(id : Int) = charactersLocalRepository.doesExistInFavorite(id)
 }

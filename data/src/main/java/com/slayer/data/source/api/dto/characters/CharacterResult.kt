@@ -1,4 +1,4 @@
-package com.slayer.data.dto.characters
+package com.slayer.data.source.api.dto.characters
 
 
 import com.slayer.domain.models.Character
@@ -36,7 +36,7 @@ data class CharacterResult(
                 id = id ?: -1,
                 image = image ?: "",
                 name = name ?: "",
-                type = name ?: "",
+                type = gender ?: "",
                 state = status ?: "",
                 isFavorite = isFavorite
             )

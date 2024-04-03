@@ -1,4 +1,4 @@
-package com.slayer.data.dto.characters
+package com.slayer.data.source.api.dto.characters
 
 
 import com.squareup.moshi.Json

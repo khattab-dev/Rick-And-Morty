@@ -10,14 +10,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
+import com.slayer.domain.models.Character
 import com.slayer.rickandmorty.R
-import com.slayer.rickandmorty.adapters.CharactersAdapter
 import com.slayer.rickandmorty.core.goneIf
 import com.slayer.rickandmorty.core.hideKeyboard
 import com.slayer.rickandmorty.core.startShimmerIf
 import com.slayer.rickandmorty.core.visibleIf
 import com.slayer.rickandmorty.databinding.FragmentCharactersBinding
+import com.slayer.rickandmorty.epoxy.controllers.CharactersController
 import com.slayer.rickandmorty.ui.dialogs.CustomerFilterDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -32,12 +34,15 @@ class CharactersFragment : Fragment() {
 
     private val TAG = this::class.simpleName
 
-    private val adapter = CharactersAdapter {
-        if (it.isFavorite) {
-            vm.insertCharacterToFav(it)
-        }
-        else {
-            vm.deleteCharacterToFav(it)
+    private val chars = mutableListOf<Character>()
+
+    private val charactersController by lazy {
+        CharactersController {
+            if (it.isFavorite) {
+                vm.insertCharacterToFav(it)
+            } else {
+                vm.deleteCharacterToFav(it)
+            }
         }
     }
 
@@ -63,15 +68,27 @@ class CharactersFragment : Fragment() {
     ): View {
         _binding = FragmentCharactersBinding.inflate(inflater, container, false)
 
-        init()
+        viewLifecycleOwner.lifecycleScope.launch {
+            vm.getRandomCharacters()
+        }
 
-        resetSearchOnEndIconClick()
-        hideKeyboardOnSearchClick()
+        viewLifecycleOwner.lifecycleScope.launch {
+            vm.randomCharactersResult.collectLatest {
+                it?.let {
+                    charactersController.randomCharss.addAll(it)
+                    charactersController.requestModelBuild()
+                }
+            }
+        }
 
+        setupRecyclerView()
         observeCustomersPagingData()
-        observeAdapterLoadingState()
 
+        handleSearchInputEndIconClick()
+        handleKeyboardSearchBtnClick()
         handleFilterBtnClick()
+
+        observeAdapterLoadingState()
 
         // Inflate the layout for this fragment
         return binding.root
@@ -91,19 +108,30 @@ class CharactersFragment : Fragment() {
         }
     }
 
-    private fun init() {
-        binding.rvCharacters.adapter = adapter
+    private fun setupRecyclerView() {
+        binding.apply {
+            val layoutManager = GridLayoutManager(requireContext(), 2)
+
+            rvCharacters.adapter = charactersController.adapter
+            rvCharacters.layoutManager = layoutManager
+
+            layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if (position in 0..2) 2 else 1
+                }
+            }
+        }
     }
 
     private fun observeCustomersPagingData() {
         viewLifecycleOwner.lifecycleScope.launch {
             vm.characterFlow.collectLatest {
-                adapter.submitData(it)
+                charactersController.submitData(it)
             }
         }
     }
 
-    private fun resetSearchOnEndIconClick() {
+    private fun handleSearchInputEndIconClick() {
         binding.containerSearch.apply {
             setEndIconOnClickListener {
                 if (editText?.text.isNullOrEmpty()) {
@@ -117,7 +145,7 @@ class CharactersFragment : Fragment() {
         }
     }
 
-    private fun hideKeyboardOnSearchClick() {
+    private fun handleKeyboardSearchBtnClick() {
         binding.containerSearch.editText?.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 vm.submitQuery(v.text.toString(), vm.getCurrentStatus(), vm.getCurrentGender())
@@ -130,7 +158,7 @@ class CharactersFragment : Fragment() {
     }
 
     private fun observeAdapterLoadingState() {
-        adapter.addLoadStateListener { loadState ->
+        charactersController.addLoadStateListener { loadState ->
             val isRefreshing = loadState.refresh is LoadState.Loading
 
             binding.apply {

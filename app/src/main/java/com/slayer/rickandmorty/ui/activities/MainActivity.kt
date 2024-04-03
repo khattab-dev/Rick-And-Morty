@@ -159,8 +159,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
     private fun setupAppBar() {
         val appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
 
-        binding.collapsingToolBar.setupWithNavController(
-            binding.toolbar,
+        binding.toolbar.setupWithNavController(
             navController,
             appBarConfiguration
         )

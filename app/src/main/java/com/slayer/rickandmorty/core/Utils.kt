@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.slayer.rickandmorty.databinding.DialogNoInternetBinding
 import com.slayer.rickandmorty.ui.dialogs.DefaultDialog
+import kotlin.random.Random
 
 fun Any?.printToLog(tag: String = "DEBUG_LOG") {
     Log.d(tag, toString())
@@ -122,4 +123,18 @@ fun Fragment.hideKeyboard() {
         val view = currentFocus ?: View(this)
         imm.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
+}
+
+fun generateRandomIds(): String {
+    val random = Random.Default
+    val maxId = 826
+    val numberOfIds = 10
+
+    val idList = mutableListOf<Int>()
+    repeat(numberOfIds) {
+        val randomId = random.nextInt(1, maxId + 1)
+        idList.add(randomId)
+    }
+
+    return idList.joinToString(",")
 }

@@ -1,11 +1,11 @@
 package com.slayer.domain.usecases
 
 import com.slayer.domain.models.Character
-import com.slayer.domain.repositories.CharactersRepository
+import com.slayer.domain.repositories.CharactersLocalRepository
 import javax.inject.Inject
 
 class DeleteCharacterFromFavUseCase @Inject constructor(
-    private val charactersRepository: CharactersRepository
+    private val charactersLocalRepository: CharactersLocalRepository
 ) {
-    suspend operator fun invoke(character: Character) = charactersRepository.deleteCharacter(character)
+    suspend operator fun invoke(character: Character) = charactersLocalRepository.deleteCharacter(character)
 }

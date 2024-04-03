@@ -74,4 +74,11 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-crashlytics")
+
+    implementation(libs.epoxy)
+    // Add the annotation processor if you are using Epoxy's annotations (recommended)
+    ksp(libs.epoxy.processor)
+
+    implementation(libs.epoxy.paging)
+
 }

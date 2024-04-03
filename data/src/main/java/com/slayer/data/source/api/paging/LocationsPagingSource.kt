@@ -1,9 +1,9 @@
-package com.slayer.data.source.paging
+package com.slayer.data.source.api.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.slayer.data.ApiService
-import com.slayer.data.dto.locations.LocationResult
+import com.slayer.data.source.api.ApiService
+import com.slayer.data.source.api.dto.locations.LocationResult
 
 class LocationsPagingSource(
     private val service: ApiService,

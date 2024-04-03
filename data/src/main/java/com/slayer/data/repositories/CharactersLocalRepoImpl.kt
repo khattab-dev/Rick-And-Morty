@@ -1,16 +1,14 @@
 package com.slayer.data.repositories
 
-import com.slayer.data.ApiService
 import com.slayer.data.source.local.dao.CharacterFavoriteDao
 import com.slayer.data.source.local.entities.CharacterEntity
 import com.slayer.domain.models.Character
-import com.slayer.domain.repositories.CharactersRepository
+import com.slayer.domain.repositories.CharactersLocalRepository
 import javax.inject.Inject
 
-class CharactersRepoImpl @Inject constructor(
-    private val apiService: ApiService,
+class CharactersLocalRepoImpl @Inject constructor(
     private val characterFavoriteDao: CharacterFavoriteDao
-) : CharactersRepository {
+) : CharactersLocalRepository {
     override suspend fun doesExistInFavorite(id: Int): Boolean {
         return characterFavoriteDao.isCharacterExist(id) == 1
     }

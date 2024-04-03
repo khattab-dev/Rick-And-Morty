@@ -1,4 +1,4 @@
-package com.slayer.data.dto.locations
+package com.slayer.data.source.api.dto.locations
 
 
 import com.slayer.domain.models.Location

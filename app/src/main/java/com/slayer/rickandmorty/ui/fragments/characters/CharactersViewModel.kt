@@ -6,15 +6,21 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.map
-import com.slayer.data.ApiService
-import com.slayer.data.dto.characters.CharacterResult.Companion.toCharacter
-import com.slayer.data.source.paging.CharacterPagingSource
+import com.slayer.data.source.api.ApiService
+import com.slayer.data.source.api.dto.characters.CharacterResult.Companion.toCharacter
+import com.slayer.data.source.api.paging.CharacterPagingSource
 import com.slayer.domain.models.Character
+import com.slayer.domain.models.NetworkResult
 import com.slayer.domain.usecases.CharacterExistenceInFavoriteUseCase
 import com.slayer.domain.usecases.DeleteCharacterFromFavUseCase
+import com.slayer.domain.usecases.GetRandomCharacters
 import com.slayer.domain.usecases.InsertCharacterToFavUseCase
+import com.slayer.rickandmorty.core.generateRandomIds
+import com.slayer.rickandmorty.core.printToLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,8 +30,12 @@ class CharactersViewModel @Inject constructor(
     private val apiService: ApiService,
     private val insertCharacterToFavUseCase: InsertCharacterToFavUseCase,
     private val deleteCharacterFromFavUseCase: DeleteCharacterFromFavUseCase,
-    private val characterExistenceInFavoriteUseCase: CharacterExistenceInFavoriteUseCase
+    private val characterExistenceInFavoriteUseCase: CharacterExistenceInFavoriteUseCase,
+    private val getRandomCharacters: GetRandomCharacters
 ) : ViewModel() {
+
+    private val _randomCharactersResult : MutableStateFlow<List<Character>?> = MutableStateFlow(null)
+    val randomCharactersResult get() = _randomCharactersResult.asStateFlow()
 
     private var prevSearchValue: String? = null
     private var prevStatus: String? = null
@@ -100,4 +110,16 @@ class CharactersViewModel @Inject constructor(
     }
 
     private suspend fun doesCharacterExistInFavorite(id: Int) = characterExistenceInFavoriteUseCase(id)
+
+    suspend fun getRandomCharacters() {
+        val result = getRandomCharacters.invoke(generateRandomIds())
+
+        when (result) {
+            is NetworkResult.Error -> {result.errorMsg.printToLog()}
+            is NetworkResult.Exception -> {result.e.stackTraceToString().printToLog()}
+            is NetworkResult.Success -> {
+                _randomCharactersResult.value = result.data as List<Character>
+            }
+        }
+    }
 }
