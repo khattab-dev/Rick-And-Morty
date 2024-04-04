@@ -65,6 +65,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         mDarkModeSwitch =
             binding.navView.menu.findItem(R.id.drawer_dark_mode).actionView as SwitchMaterial
 
+        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
         setupNavController()
 
         setupBackPressedCallback()
@@ -106,6 +108,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.apply {
                 hide = destination.id !in mainDestinations
+
                 toggleAppBar()
 
                 bottomNavigationView visibleIf (destination.id in mainDestinations)
@@ -134,12 +137,12 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
             }
 
             override fun onDrawerOpened(drawerView: View) {
-                // Called when the drawer is fully opened
+                binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 onBackPressedCallback.isEnabled = true
             }
 
             override fun onDrawerClosed(drawerView: View) {
-                // Called when the drawer is fully closed
+                binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 onBackPressedCallback.isEnabled = false
             }
 

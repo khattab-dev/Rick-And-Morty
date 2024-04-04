@@ -5,14 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.slayer.domain.models.Character
 import com.slayer.rickandmorty.R
 import com.slayer.rickandmorty.core.goneIf
 import com.slayer.rickandmorty.core.hideKeyboard
@@ -33,8 +34,6 @@ class CharactersFragment : Fragment() {
     private val vm: CharactersViewModel by viewModels()
 
     private val TAG = this::class.simpleName
-
-    private val chars = mutableListOf<Character>()
 
     private val charactersController by lazy {
         CharactersController {
@@ -68,10 +67,51 @@ class CharactersFragment : Fragment() {
     ): View {
         _binding = FragmentCharactersBinding.inflate(inflater, container, false)
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            vm.getRandomCharacters()
+        vm.getRandomCharacters()
+
+
+        setupRecyclerView()
+
+        observeCustomersPagingData()
+        observeCustomersPagingData()
+        observeRandomCharacters()
+        observeAdapterLoadingState()
+
+        handleSearchInputEndIconClick()
+        handleKeyboardSearchBtnClick()
+        handleFilterBtnClick()
+
+        binding.fab.setOnClickListener {
+            binding.rvCharacters.startNestedScroll(
+                ViewCompat.SCROLL_AXIS_VERTICAL,
+                ViewCompat.TYPE_NON_TOUCH
+            )
+            binding.rvCharacters.smoothScrollToPosition(0)
         }
 
+        binding.rvCharacters.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val layoutManager = recyclerView.layoutManager as GridLayoutManager
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                if (firstVisibleItemPosition == 0 && dy > 0) {
+                    binding.fab.hide()
+                } else if (firstVisibleItemPosition > 3 && dy < 0) {
+                    binding.fab.show()
+                } else {
+                    binding.fab.hide()
+                }
+            }
+        })
+
+
+        // Inflate the layout for this fragment
+        return binding.root
+    }
+
+    private fun observeRandomCharacters() {
         viewLifecycleOwner.lifecycleScope.launch {
             vm.randomCharactersResult.collectLatest {
                 it?.let {
@@ -80,18 +120,6 @@ class CharactersFragment : Fragment() {
                 }
             }
         }
-
-        setupRecyclerView()
-        observeCustomersPagingData()
-
-        handleSearchInputEndIconClick()
-        handleKeyboardSearchBtnClick()
-        handleFilterBtnClick()
-
-        observeAdapterLoadingState()
-
-        // Inflate the layout for this fragment
-        return binding.root
     }
 
     override fun onDestroy() {
@@ -101,10 +129,16 @@ class CharactersFragment : Fragment() {
     }
 
     private fun handleFilterBtnClick() {
-        binding.btnFilter.setOnClickListener {
-            val dialog = CustomerFilterDialog()
+        binding.btnFilter.apply {
+            setOnClickListener {
+                isClickable = false
 
-            dialog.show(childFragmentManager, dialog.javaClass.simpleName)
+                val dialog = CustomerFilterDialog {
+                    isClickable = true
+                }
+
+                dialog.show(childFragmentManager, dialog.javaClass.simpleName)
+            }
         }
     }
 
@@ -160,9 +194,8 @@ class CharactersFragment : Fragment() {
     private fun observeAdapterLoadingState() {
         charactersController.addLoadStateListener { loadState ->
             val isRefreshing = loadState.refresh is LoadState.Loading
-
             binding.apply {
-                shimmerLayout.apply {
+                shimmerLayout.shimmerLayout.apply {
                     this visibleIf isRefreshing
                     this startShimmerIf isRefreshing
                 }

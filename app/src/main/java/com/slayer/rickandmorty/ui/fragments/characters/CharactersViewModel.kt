@@ -34,7 +34,7 @@ class CharactersViewModel @Inject constructor(
     private val getRandomCharacters: GetRandomCharacters
 ) : ViewModel() {
 
-    private val _randomCharactersResult : MutableStateFlow<List<Character>?> = MutableStateFlow(null)
+    private val _randomCharactersResult: MutableStateFlow<List<Character>?> = MutableStateFlow(null)
     val randomCharactersResult get() = _randomCharactersResult.asStateFlow()
 
     private var prevSearchValue: String? = null
@@ -109,14 +109,19 @@ class CharactersViewModel @Inject constructor(
         deleteCharacterFromFavUseCase(character)
     }
 
-    private suspend fun doesCharacterExistInFavorite(id: Int) = characterExistenceInFavoriteUseCase(id)
+    private suspend fun doesCharacterExistInFavorite(id: Int) =
+        characterExistenceInFavoriteUseCase(id)
 
-    suspend fun getRandomCharacters() {
-        val result = getRandomCharacters.invoke(generateRandomIds())
+    fun getRandomCharacters() = viewModelScope.launch(Dispatchers.IO) {
+        when (val result = getRandomCharacters.invoke(generateRandomIds())) {
+            is NetworkResult.Error -> {
+                result.errorMsg.printToLog()
+            }
 
-        when (result) {
-            is NetworkResult.Error -> {result.errorMsg.printToLog()}
-            is NetworkResult.Exception -> {result.e.stackTraceToString().printToLog()}
+            is NetworkResult.Exception -> {
+                result.e.stackTraceToString().printToLog()
+            }
+
             is NetworkResult.Success -> {
                 _randomCharactersResult.value = result.data as List<Character>
             }

@@ -1,5 +1,6 @@
 package com.slayer.rickandmorty.ui.dialogs
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,7 @@ import com.slayer.rickandmorty.core.Constants
 import com.slayer.rickandmorty.databinding.DialogCustomersFilterBinding
 import com.slayer.rickandmorty.ui.fragments.characters.CharactersViewModel
 
-class CustomerFilterDialog : DialogFragment() {
+class CustomerFilterDialog(private val onDismiss: (() -> Unit)) : DialogFragment() {
     private var _binding: DialogCustomersFilterBinding? = null
     private val binding get() = _binding!!
 
@@ -123,5 +124,11 @@ class CustomerFilterDialog : DialogFragment() {
             Constants.GENDERLESS_GENDER -> binding.rgGender.check(R.id.rb_genderless)
             Constants.UNKNOWN_GENDER -> binding.rgGender.check(R.id.rb_unknown_gender)
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+
+        onDismiss.invoke()
     }
 }

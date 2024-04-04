@@ -19,15 +19,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    app:layout_scrollFlags="scroll|snap"
-                    app:title="R &amp; M"
-                    app:titleCentered="true"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin" />
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|snap"
+                app:title="R &amp; M"
+                app:titleCentered="true" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.fragment.app.FragmentContainerView
@@ -35,7 +34,6 @@
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             app:defaultNavHost="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -57,4 +55,5 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:menu="@menu/menu_drawer" />
+
 </androidx.drawerlayout.widget.DrawerLayout>
