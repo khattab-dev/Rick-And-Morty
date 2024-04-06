@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 
     implementation(libs.shimmer)
+    implementation(libs.firebase.firestore)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -74,11 +75,13 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-firestore")
 
     implementation(libs.epoxy)
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
     ksp(libs.epoxy.processor)
 
     implementation(libs.epoxy.paging)
+    implementation(libs.androidx.work.runtime.ktx)
 
 }

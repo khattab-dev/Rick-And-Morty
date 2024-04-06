@@ -61,4 +61,6 @@ dependencies {
     implementation(libs.firebase.ui.auth)
 
     implementation(libs.androidx.room.ktx)
+
+    implementation(libs.androidx.work.runtime.ktx)
 }

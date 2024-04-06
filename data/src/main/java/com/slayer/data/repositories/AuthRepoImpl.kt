@@ -61,10 +61,7 @@ class AuthRepoImpl @Inject constructor(private val firebaseAuth: FirebaseAuth) :
 
     override fun logout(): Boolean {
         firebaseAuth.signOut()
-        return if (firebaseAuth.currentUser == null) {
-            true
-        } else {
-            false
-        }
+
+        return firebaseAuth.currentUser == null
     }
 }

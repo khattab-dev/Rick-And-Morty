@@ -35,7 +35,7 @@ class LoginFragment : Fragment() {
 
     private val viewModel: LoginViewModel by viewModels()
 
-    private lateinit var firebaseAuth: FirebaseAuth
+    private val firebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     private lateinit var gso: GoogleSignInOptions
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -63,8 +63,6 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        firebaseAuth = FirebaseAuth.getInstance()
-
         initializeGso()
 
         initializeGoogleSignInClient()
