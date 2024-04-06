@@ -20,10 +20,6 @@ import com.slayer.rickandmorty.databinding.DialogNoInternetBinding
 import com.slayer.rickandmorty.ui.dialogs.DefaultDialog
 import kotlin.random.Random
 
-fun Any?.printToLog(tag: String = "DEBUG_LOG") {
-    Log.d(tag, toString())
-}
-
 fun View.gone() = run { visibility = View.GONE }
 
 fun View.visible() = run { visibility = View.VISIBLE }

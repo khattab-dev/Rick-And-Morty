@@ -2,8 +2,8 @@ package com.slayer.di
 
 import android.content.Context
 import androidx.room.Room
-import com.slayer.data.source.local.FavoriteDatabase
-import com.slayer.data.source.local.dao.CharacterFavoriteDao
+import com.slayer.data.dataSources.local.FavoriteDatabase
+import com.slayer.data.dataSources.local.dao.CharacterFavoriteDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

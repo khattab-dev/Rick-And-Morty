@@ -16,10 +16,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.slayer.common.printToLog
 import com.slayer.rickandmorty.R
 import com.slayer.rickandmorty.core.createSpannableString
 import com.slayer.rickandmorty.core.isValidEmailAddress
-import com.slayer.rickandmorty.core.printToLog
 import com.slayer.rickandmorty.core.safeCall
 import com.slayer.rickandmorty.core.toast
 import com.slayer.rickandmorty.databinding.FragmentLoginBinding

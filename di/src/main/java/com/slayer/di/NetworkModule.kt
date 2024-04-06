@@ -1,7 +1,7 @@
 package com.slayer.di
 
 import android.content.Context
-import com.slayer.data.source.api.ApiService
+import com.slayer.data.dataSources.api.ApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module

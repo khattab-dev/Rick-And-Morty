@@ -10,11 +10,11 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.slayer.rickandmorty.R
-import com.slayer.rickandmorty.ui.dialogs.DefaultDialog
 import com.slayer.rickandmorty.core.isValidEmailAddress
 import com.slayer.rickandmorty.core.safeCall
 import com.slayer.rickandmorty.databinding.DialogResetMailSentBinding
 import com.slayer.rickandmorty.databinding.FragmentForgetPasswordBinding
+import com.slayer.rickandmorty.ui.dialogs.DefaultDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

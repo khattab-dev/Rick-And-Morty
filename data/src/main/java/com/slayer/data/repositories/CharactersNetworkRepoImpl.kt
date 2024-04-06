@@ -1,8 +1,8 @@
 package com.slayer.data.repositories
 
-import com.slayer.data.source.api.ApiHandler
-import com.slayer.data.source.api.ApiService
-import com.slayer.data.source.api.dto.characters.CharacterResult.Companion.toCharacter
+import com.slayer.data.dataSources.api.ApiHandler
+import com.slayer.data.dataSources.api.ApiService
+import com.slayer.data.dataSources.api.dto.characters.CharacterResult.Companion.toCharacter
 import com.slayer.domain.models.Character
 import com.slayer.domain.models.NetworkResult
 import com.slayer.domain.repositories.CharactersNetworkRepository

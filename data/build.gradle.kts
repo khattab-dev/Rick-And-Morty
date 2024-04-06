@@ -36,6 +36,7 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+    implementation(project(":common"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -60,4 +61,11 @@ dependencies {
     implementation(libs.androidx.room.ktx)
 
     implementation(libs.androidx.work.runtime.ktx)
+
+    // Hilt
+    implementation(libs.hilt.core)
+    implementation(libs.androidx.hilt.work)
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
+
 }

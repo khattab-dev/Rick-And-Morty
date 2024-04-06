@@ -1,4 +1,4 @@
-package com.slayer.data.source.api.dto.characters
+package com.slayer.data.dataSources.api.dto.characters
 
 
 import com.slayer.domain.models.Character

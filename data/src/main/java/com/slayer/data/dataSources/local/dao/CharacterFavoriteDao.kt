@@ -1,16 +1,19 @@
-package com.slayer.data.source.local.dao
+package com.slayer.data.dataSources.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.slayer.data.source.local.entities.CharacterEntity
+import com.slayer.data.dataSources.local.entities.CharacterEntity
 
 @Dao
 interface CharacterFavoriteDao {
     @Query("SELECT COUNT(*) FROM characterentity WHERE id = :characterId")
     suspend fun isCharacterExist(characterId: Int): Int
+
+    @Query("SELECT id FROM characterentity")
+    fun getAllFavoriteCharacters() : List<Int>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharacter(character : CharacterEntity)

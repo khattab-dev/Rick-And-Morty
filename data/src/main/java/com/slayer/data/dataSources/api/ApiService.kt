@@ -1,8 +1,8 @@
-package com.slayer.data.source.api
+package com.slayer.data.dataSources.api
 
-import com.slayer.data.source.api.dto.characters.CharacterResponse
-import com.slayer.data.source.api.dto.characters.CharacterResult
-import com.slayer.data.source.api.dto.locations.LocationsResponse
+import com.slayer.data.dataSources.api.dto.characters.CharacterResponse
+import com.slayer.data.dataSources.api.dto.characters.CharacterResult
+import com.slayer.data.dataSources.api.dto.locations.LocationsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

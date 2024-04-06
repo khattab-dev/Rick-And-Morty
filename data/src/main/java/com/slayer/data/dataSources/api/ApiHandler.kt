@@ -1,4 +1,4 @@
-package com.slayer.data.source.api
+package com.slayer.data.dataSources.api
 
 import com.slayer.domain.models.NetworkResult
 import retrofit2.HttpException

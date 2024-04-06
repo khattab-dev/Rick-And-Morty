@@ -1,4 +1,4 @@
-package com.slayer.data.source.local.entities
+package com.slayer.data.dataSources.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

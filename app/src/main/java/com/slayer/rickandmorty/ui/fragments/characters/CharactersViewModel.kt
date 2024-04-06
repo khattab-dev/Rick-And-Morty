@@ -6,9 +6,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.map
-import com.slayer.data.source.api.ApiService
-import com.slayer.data.source.api.dto.characters.CharacterResult.Companion.toCharacter
-import com.slayer.data.source.api.paging.CharacterPagingSource
+import com.slayer.data.dataSources.api.ApiService
+import com.slayer.data.dataSources.api.dto.characters.CharacterResult.Companion.toCharacter
+import com.slayer.data.dataSources.api.paging.CharacterPagingSource
 import com.slayer.domain.models.Character
 import com.slayer.domain.models.NetworkResult
 import com.slayer.domain.usecases.CharacterExistenceInFavoriteUseCase
@@ -16,7 +16,7 @@ import com.slayer.domain.usecases.DeleteCharacterFromFavUseCase
 import com.slayer.domain.usecases.GetRandomCharacters
 import com.slayer.domain.usecases.InsertCharacterToFavUseCase
 import com.slayer.rickandmorty.core.generateRandomIds
-import com.slayer.rickandmorty.core.printToLog
+import com.slayer.common.printToLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

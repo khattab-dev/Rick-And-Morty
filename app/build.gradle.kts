@@ -46,6 +46,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":di"))
     implementation(project(":data"))
+    implementation(project(":common"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -63,8 +64,13 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
+    implementation(libs.androidx.work.runtime.ktx)
+
+    // Hilt
     implementation(libs.hilt.core)
+    implementation(libs.androidx.hilt.work)
     ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     implementation(libs.androidx.paging.runtime)
 
@@ -78,10 +84,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
 
     implementation(libs.epoxy)
-    // Add the annotation processor if you are using Epoxy's annotations (recommended)
     ksp(libs.epoxy.processor)
 
     implementation(libs.epoxy.paging)
-    implementation(libs.androidx.work.runtime.ktx)
-
 }
