@@ -16,6 +16,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -27,6 +28,7 @@ import com.slayer.rickandmorty.core.toast
 import com.slayer.rickandmorty.core.visibleIf
 import com.slayer.rickandmorty.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -189,13 +191,14 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
     }
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
-
         when (p0.itemId) {
             R.id.drawer_signout -> {
-                if (vm.tryLogout()) {
-                    navController.navigate(R.id.action_charactersFragment_to_loginFragment)
-                } else {
-                    toast("Something went wrong, Please try again")
+                lifecycleScope.launch {
+                    if (vm.tryLogout()) {
+                        navController.navigate(R.id.action_charactersFragment_to_loginFragment)
+                    } else {
+                        toast("Something went wrong, Please try again")
+                    }
                 }
             }
         }

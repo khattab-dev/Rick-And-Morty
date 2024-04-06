@@ -22,6 +22,7 @@ class RickAndMortyApp(
 ) : Application(), Configuration.Provider {
     // @Inject lateinit var workerFactory: HiltWorkerFactory
     // https://github.com/google/dagger/issues/2766#issuecomment-886195011
+
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface HiltWorkerFactoryEntryPoint {

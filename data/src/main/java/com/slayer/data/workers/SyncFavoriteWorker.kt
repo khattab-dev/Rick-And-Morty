@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.slayer.common.Constants
 import com.slayer.common.printToLog
-import com.slayer.domain.usecases.GetFavoriteCharactersIds
+import com.slayer.domain.usecases.characters.GetFavoriteCharactersIds
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 

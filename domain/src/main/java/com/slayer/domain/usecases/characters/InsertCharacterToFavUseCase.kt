@@ -1,4 +1,4 @@
-package com.slayer.domain.usecases
+package com.slayer.domain.usecases.characters
 
 import com.slayer.domain.models.Character
 import com.slayer.domain.repositories.CharactersLocalRepository
@@ -8,4 +8,5 @@ class InsertCharacterToFavUseCase @Inject constructor(
     private val charactersLocalRepository: CharactersLocalRepository
 ) {
     suspend operator fun invoke(character: Character) = charactersLocalRepository.insertCharacter(character)
+    suspend operator fun invoke(character: List<Character>) = charactersLocalRepository.insertCharacter(character)
 }

@@ -11,10 +11,10 @@ import com.slayer.data.dataSources.api.dto.characters.CharacterResult.Companion.
 import com.slayer.data.dataSources.api.paging.CharacterPagingSource
 import com.slayer.domain.models.Character
 import com.slayer.domain.models.NetworkResult
-import com.slayer.domain.usecases.CharacterExistenceInFavoriteUseCase
-import com.slayer.domain.usecases.DeleteCharacterFromFavUseCase
-import com.slayer.domain.usecases.GetRandomCharacters
-import com.slayer.domain.usecases.InsertCharacterToFavUseCase
+import com.slayer.domain.usecases.characters.CharacterExistenceInFavoriteUseCase
+import com.slayer.domain.usecases.characters.DeleteCharacterFromFavUseCase
+import com.slayer.domain.usecases.characters.GetRandomCharacters
+import com.slayer.domain.usecases.characters.InsertCharacterToFavUseCase
 import com.slayer.rickandmorty.core.generateRandomIds
 import com.slayer.common.printToLog
 import dagger.hilt.android.lifecycle.HiltViewModel

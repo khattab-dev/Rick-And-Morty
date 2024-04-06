@@ -5,8 +5,8 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.slayer.common.printToLog
 import com.slayer.domain.models.NetworkResult
-import com.slayer.domain.usecases.GoogleAuthUseCase
-import com.slayer.domain.usecases.RegisterUseCase
+import com.slayer.domain.usecases.auth.GoogleAuthUseCase
+import com.slayer.domain.usecases.auth.RegisterUseCase
 import com.slayer.rickandmorty.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

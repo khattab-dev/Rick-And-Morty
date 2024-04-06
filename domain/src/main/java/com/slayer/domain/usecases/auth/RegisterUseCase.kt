@@ -1,4 +1,4 @@
-package com.slayer.domain.usecases
+package com.slayer.domain.usecases.auth
 
 import com.slayer.domain.repositories.AuthRepository
 import javax.inject.Inject

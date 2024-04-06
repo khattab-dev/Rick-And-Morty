@@ -172,7 +172,7 @@ class LoginFragment : Fragment() {
             lifecycleScope.launch {
                 viewModel.apply {
                     setLoadingValue(true)
-                    tryLogin(email, password)
+                    tryLoginWithEmailAndPassword(email, password)
 
                     if (loginResult.value?.user != null) {
                         findNavController().navigate(R.id.action_loginFragment_to_charactersFragment)

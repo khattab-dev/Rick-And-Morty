@@ -21,7 +21,15 @@ class CharactersLocalRepoImpl @Inject constructor(
         characterFavoriteDao.insertCharacter(CharacterEntity(character.id))
     }
 
+    override suspend fun insertCharacter(character: List<Character>) {
+        characterFavoriteDao.insertCharacter(character.map { CharacterEntity(it.id) })
+    }
+
     override suspend fun deleteCharacter(character: Character) {
         characterFavoriteDao.deleteCharacter(CharacterEntity(character.id))
+    }
+
+    override suspend fun clearCharacters() {
+        characterFavoriteDao.clearCharacterFavorite()
     }
 }

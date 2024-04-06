@@ -59,6 +59,8 @@ dependencies {
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.ui.auth)
+    implementation("com.google.firebase:firebase-firestore")
+
 
     implementation(libs.androidx.room.ktx)
 

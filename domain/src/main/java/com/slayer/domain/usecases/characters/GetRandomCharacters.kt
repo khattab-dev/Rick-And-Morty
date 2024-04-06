@@ -1,4 +1,4 @@
-package com.slayer.domain.usecases
+package com.slayer.domain.usecases.characters
 
 import com.slayer.domain.repositories.CharactersNetworkRepository
 import javax.inject.Inject

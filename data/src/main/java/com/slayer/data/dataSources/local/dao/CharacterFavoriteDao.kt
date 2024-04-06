@@ -15,8 +15,14 @@ interface CharacterFavoriteDao {
     @Query("SELECT id FROM characterentity")
     fun getAllFavoriteCharacters() : List<Int>
 
+    @Query("DELETE FROM characterentity")
+    suspend fun clearCharacterFavorite()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharacter(character : CharacterEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCharacter(character : List<CharacterEntity>)
 
     @Delete
     suspend fun deleteCharacter(character : CharacterEntity)

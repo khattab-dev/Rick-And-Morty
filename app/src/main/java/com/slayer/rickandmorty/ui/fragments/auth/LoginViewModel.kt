@@ -6,8 +6,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.slayer.common.printToLog
 import com.slayer.domain.models.NetworkResult
-import com.slayer.domain.usecases.GoogleAuthUseCase
-import com.slayer.domain.usecases.LoginUseCase
+import com.slayer.domain.usecases.auth.GoogleAuthUseCase
+import com.slayer.domain.usecases.auth.LoginUseCase
 import com.slayer.rickandmorty.R
 import com.slayer.rickandmorty.core.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,7 +36,7 @@ class LoginViewModel @Inject constructor(
         _isLoading.value = value
     }
 
-    suspend fun tryLogin(email: String, password: String) {
+    suspend fun tryLoginWithEmailAndPassword(email: String, password: String) {
         loginUseCase(email, password).apply {
             when (this) {
                 is NetworkResult.Error -> {

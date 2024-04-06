@@ -1,4 +1,4 @@
-package com.slayer.domain.usecases
+package com.slayer.domain.usecases.characters
 
 import com.slayer.domain.models.Character
 import com.slayer.domain.repositories.CharactersLocalRepository

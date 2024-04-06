@@ -3,7 +3,7 @@ package com.slayer.rickandmorty.ui.fragments.auth.forget_password
 import androidx.lifecycle.ViewModel
 import com.slayer.common.printToLog
 import com.slayer.domain.models.NetworkResult
-import com.slayer.domain.usecases.ForgetPasswordUseCase
+import com.slayer.domain.usecases.auth.ForgetPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
