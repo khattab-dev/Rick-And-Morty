@@ -35,8 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.slayer.rickandmorty.ui.fragments.auth.register.RegisterFragment"
-        android:label="RegisterFragment" >
+        android:name="com.slayer.rickandmorty.ui.fragments.auth.register.RegisterFragment">
         <action
             android:id="@+id/action_registerFragment_to_charactersFragment"
             app:destination="@id/charactersFragment"
@@ -46,6 +45,5 @@
     <fragment
         android:id="@+id/forgetPasswordFragment"
         android:name="com.slayer.rickandmorty.ui.fragments.auth.forget_password.ForgetPasswordFragment"
-        android:label="ForgetPasswordFragment"
         tools:layout="@layout/fragment_forget_password"/>
 </navigation>
