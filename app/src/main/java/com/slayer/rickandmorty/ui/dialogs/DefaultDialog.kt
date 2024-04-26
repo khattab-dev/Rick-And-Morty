@@ -8,6 +8,7 @@ import android.view.ViewGroup
 
 class DefaultDialog(private val context: Context, private val view: View) : Dialog(context) {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(view)
@@ -20,8 +21,6 @@ class DefaultDialog(private val context: Context, private val view: View) : Dial
 
         this.window?.apply {
             setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
-            setBackgroundDrawable(null)
         }
     }
-
 }
