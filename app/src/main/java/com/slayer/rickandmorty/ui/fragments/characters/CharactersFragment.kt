@@ -14,11 +14,10 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.slayer.common.goneIf
+import com.slayer.common.hideKeyboard
+import com.slayer.common.visibleIf
 import com.slayer.rickandmorty.R
-import com.slayer.rickandmorty.core.goneIf
-import com.slayer.rickandmorty.core.hideKeyboard
-import com.slayer.rickandmorty.core.startShimmerIf
-import com.slayer.rickandmorty.core.visibleIf
 import com.slayer.rickandmorty.databinding.FragmentCharactersBinding
 import com.slayer.rickandmorty.epoxy.controllers.CharactersController
 import com.slayer.rickandmorty.ui.dialogs.CustomerFilterDialog
@@ -57,7 +56,7 @@ class CharactersFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         if (auth.currentUser == null) {
-            findNavController().navigate(R.id.action_charactersFragment_to_loginFragment)
+            findNavController().navigate(R.id.action_charactersFragment_to_auth_graph)
         }
     }
 
@@ -68,7 +67,6 @@ class CharactersFragment : Fragment() {
         _binding = FragmentCharactersBinding.inflate(inflater, container, false)
 
         vm.getRandomCharacters()
-
 
         setupRecyclerView()
 
@@ -180,7 +178,7 @@ class CharactersFragment : Fragment() {
     }
 
     private fun handleKeyboardSearchBtnClick() {
-        binding.containerSearch.editText?.setOnEditorActionListener { v, actionId, event ->
+        binding.containerSearch.editText?.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 vm.submitQuery(v.text.toString(), vm.getCurrentStatus(), vm.getCurrentGender())
 
@@ -195,9 +193,14 @@ class CharactersFragment : Fragment() {
         charactersController.addLoadStateListener { loadState ->
             val isRefreshing = loadState.refresh is LoadState.Loading
             binding.apply {
+                if (isRefreshing) {
+                    shimmerLayout.shimmerLayout.startShimmer()
+                } else {
+                    shimmerLayout.shimmerLayout.stopShimmer()
+                }
+
                 shimmerLayout.shimmerLayout.apply {
                     this visibleIf isRefreshing
-                    this startShimmerIf isRefreshing
                 }
 
                 layoutGroup goneIf isRefreshing

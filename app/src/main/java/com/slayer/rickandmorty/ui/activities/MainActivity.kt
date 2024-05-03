@@ -20,9 +20,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.slayer.common.toast
+import com.slayer.common.visibleIf
 import com.slayer.rickandmorty.R
-import com.slayer.rickandmorty.core.toast
-import com.slayer.rickandmorty.core.visibleIf
 import com.slayer.rickandmorty.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         setInitialTheme()
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
-
         //enableEdgeToEdge()
 
         setContentView(binding.root)
@@ -73,16 +72,9 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         setupAppBar()
         setupNavViews()
         setupDarkModeSwitch()
-
         binding.navView.setNavigationItemSelectedListener(this)
 
         observeDestinationChanges()
-
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
     }
 
     private fun setInitialTheme() {
@@ -192,7 +184,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
             R.id.drawer_signout -> {
                 lifecycleScope.launch {
                     if (vm.tryLogout()) {
-                        navController.navigate(R.id.action_charactersFragment_to_loginFragment)
+                        navController.navigate(R.id.action_charactersFragment_to_auth_graph)
                     } else {
                         toast("Something went wrong, Please try again")
                     }

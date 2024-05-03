@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":di"))
     implementation(project(":data"))
     implementation(project(":common"))
+    implementation(project(":feature-auth"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -77,7 +78,6 @@ dependencies {
     implementation(libs.glide)
 
     implementation(platform(libs.firebase.bom))
-    implementation(libs.play.services.auth)
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-crashlytics")
@@ -85,6 +85,5 @@ dependencies {
 
     implementation(libs.epoxy)
     ksp(libs.epoxy.processor)
-
     implementation(libs.epoxy.paging)
 }

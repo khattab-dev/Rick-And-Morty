@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import com.slayer.common.Constants
 import com.slayer.rickandmorty.R
-import com.slayer.rickandmorty.core.Constants
 import com.slayer.rickandmorty.databinding.DialogCustomersFilterBinding
 import com.slayer.rickandmorty.ui.fragments.characters.CharactersViewModel
 

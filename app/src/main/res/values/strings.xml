@@ -57,4 +57,5 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="create_account">Create Account</string>
     <string name="do_you_have_account_sign_in">Do you have account? Sign In</string>
+    <string name="title_login">Authentication Module</string>
 </resources>
