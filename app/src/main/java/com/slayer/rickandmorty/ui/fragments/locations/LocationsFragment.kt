@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.slayer.common.goneIf
 import com.slayer.common.hideKeyboard
+import com.slayer.common.visibleIf
 import com.slayer.rickandmorty.adapters.LocationsAdapter
 import com.slayer.rickandmorty.databinding.FragmentLocationsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -92,6 +93,7 @@ class LocationsFragment : Fragment() {
                     shimmerLayout.stopShimmer()
                 }
 
+                shimmerLayout visibleIf isRefreshing
                 layoutGroup goneIf isRefreshing
             }
         }

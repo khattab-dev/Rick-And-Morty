@@ -1,7 +1,6 @@
 package com.slayer.rickandmorty.ui.activities
 
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -10,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -26,7 +24,6 @@ import com.slayer.rickandmorty.R
 import com.slayer.rickandmorty.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
@@ -45,8 +42,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         R.id.charactersFragment,
         R.id.locationsFragment
     )
-
-    private var hide = true
 
     private lateinit var mDarkModeSwitch: SwitchMaterial
 
@@ -98,11 +93,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
     private fun observeDestinationChanges() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.apply {
-                hide = destination.id !in mainDestinations
-
-                toggleAppBar()
-
                 bottomNavigationView visibleIf (destination.id in mainDestinations)
+                toolbar visibleIf (destination.id in mainDestinations)
             }
         }
     }
@@ -164,22 +156,9 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         navController = navHostFragment.navController
     }
 
-    private fun toggleAppBar() {
-        val tv = TypedValue()
-        var actionBarHeight = 0
-
-        if (theme.resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-            actionBarHeight =
-                TypedValue.complexToDimensionPixelSize(tv.data, resources.displayMetrics)
-        }
-
-        val lp = binding.appBarLayout.layoutParams as CoordinatorLayout.LayoutParams
-        lp.height = if (hide) 0 else actionBarHeight
-        binding.appBarLayout.layoutParams = lp
-        binding.appBarLayout.setExpanded(!hide, true)
-    }
-
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
+
         when (p0.itemId) {
             R.id.drawer_signout -> {
                 lifecycleScope.launch {
@@ -192,7 +171,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
             }
         }
 
-        binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 }

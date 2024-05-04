@@ -17,12 +17,13 @@
         android:id="@+id/tv_locations"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         app:cardBackgroundColor="?attr/colorOnTertiary"
         app:cardElevation="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container_search"
         app:cardUseCompatPadding="true"
         app:contentPadding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/container_search"
         app:strokeWidth="0dp">
 
         <com.google.android.material.textview.MaterialTextView
@@ -98,6 +99,7 @@
                 android:layout_height="16dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
+                android:rotation="72"
                 app:cardBackgroundColor="@color/shimmerColor"
                 app:cardCornerRadius="16dp" />
 

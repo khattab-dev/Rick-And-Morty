@@ -16,15 +16,18 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
+            android:backgroundTint="?colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="wrap_content"
                 app:layout_collapseMode="pin"
-                app:layout_scrollFlags="scroll|snap"
+                app:layout_scrollFlags="scroll"
+                android:theme="@style/ToolbarTheme"
+                app:titleTextColor="@android:color/white"
                 app:title="R &amp; M"
                 app:titleCentered="true" />
         </com.google.android.material.appbar.AppBarLayout>
@@ -35,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:defaultNavHost="true"
+            android:layout_marginHorizontal="8dp"
             android:layout_marginTop="16dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:navGraph="@navigation/nav_graph" />
@@ -53,6 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        app:headerLayout="@layout/drawer_header"
         tools:visibility="gone"
         android:fitsSystemWindows="true"
         app:menu="@menu/menu_drawer" />

@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.RickAndMorty" parent="Base.Theme.RickAndMorty" />
+
 </resources>
