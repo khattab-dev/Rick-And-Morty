@@ -1,6 +1,7 @@
 # Rick and Morty
 
 <a href="https://www.linkedin.com/in/khattab-dev/"><img alt="LinkedIn Badge" src="https://img.shields.io/badge/LinkedIn-khattab--dev-blue?logo=Linkedin"></a>
+<img alt="Static Badge" src="https://img.shields.io/badge/Android-View-green?logo=android">
 
 ![Rick and Morty](https://github.com/AhmedKhattab01/Rick-And-Morty/assets/92499066/6d274a1d-efd7-437d-886e-c09cd9b78033)
 
